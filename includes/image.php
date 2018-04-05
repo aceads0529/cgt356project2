@@ -2,6 +2,7 @@
 
 /**
  * Uploads an image file, resizing for large and thumbnail
+ * Returns the image filename, or false if unsuccessful
  *
  * @param array $file
  * @return bool|string
@@ -19,6 +20,7 @@ function upload_image($file)
 
         $filename = generate_filename($_FILES['file']) . '.jpg';
 
+        // All files are stored as jpeg images
         imagejpeg($large, '../image_uploads/large/' . $filename, 90);
         imagejpeg($thumb, '../image_uploads/thumb/' . $filename, 90);
 
@@ -48,6 +50,7 @@ function is_image($file)
  */
 function generate_filename($file)
 {
+    // md5 ensures a unique filename every time
     return md5($file['name'] . (string)time());
 }
 
@@ -62,6 +65,7 @@ function image_from_file($file)
     $type = $file['type'];
     $result = false;
 
+    // Call appropriate create function for each type of image file
     switch ($type) {
         case 'image/jpeg':
             $result = imagecreatefromjpeg($file['tmp_name']);
@@ -91,10 +95,12 @@ function resize($image, $max_width, $max_height)
 
     $src_ratio = $src_width / (double)$src_height;
 
+    // If maximum size is greater than the image size, use original image size
     if ($src_width < $max_width && $src_height < $max_height) {
         $dst_width = $src_width;
         $dst_height = $src_height;
-    } elseif ($src_ratio < 1) {
+    } // Otherwise, calculate output image dimensions accordingly
+    elseif ($src_ratio < 1) {
         $dst_width = $max_height * $src_ratio;
         $dst_height = $max_height;
     } else {
