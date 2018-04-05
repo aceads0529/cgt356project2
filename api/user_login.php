@@ -2,17 +2,18 @@
 include '../includes/utils.php';
 include '../includes/db.php';
 
-$params = safe_post_read('username', 'password');
+safe_session_start();
 
-$db = db_connect();
-$user = db_query($db, 'SELECT * FROM users WHERE Login=?', $params['username']);
+list($params, $num_empty) = safe_post_read('username', 'password');
+$user = db_connect_query('SELECT * FROM users WHERE Login=?', $params['username']);
 
-if ($user->num_rows > 0) {
+if ($user && $user->num_rows > 0) {
     $user = $user->fetch_assoc();
 
     $pswd_hash = md5($user['PswdSalt'] . $params['password']);
 
     if ($pswd_hash == $user['PswdHash']) {
+        $_SESSION['user-id'] = $user['UserId'];
         api_response(true);
     }
 }
