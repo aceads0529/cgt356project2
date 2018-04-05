@@ -6,7 +6,7 @@ include '../includes/image.php';
 list($params, $num_empty) = safe_post_read('label', 'description?');
 
 if ($num_empty > 0)
-    api_response(false, 'Please fill out all required fields');
+    api_response(false, ERR_REQUIRED_FIELDS);
 
 $filename = upload_image($_FILES['file']);
 
