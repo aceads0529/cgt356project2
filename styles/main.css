@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+body {
+    color: #eee;
+    background: #223;
+    margin: 50px;
+    font: 14px 'Montserrat Medium', sans-serif;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 50px;
+}

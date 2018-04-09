@@ -157,7 +157,7 @@ function parse_selection_range($select, $column)
         $subterms = explode('-', $term);
 
         if (count($subterms) == 1) {
-            if (!is_integer($subterms[0]))
+            if (!is_numeric($subterms[0]))
                 $subterms[0] = '`' . trim($subterms[0]) . '`';
 
             $subquery = $column . '=' . trim($subterms[0]);
