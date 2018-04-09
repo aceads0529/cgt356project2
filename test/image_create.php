@@ -56,26 +56,18 @@
 <body>
 <h1>Upload Image</h1>
 <div id="message"></div>
-<form method="post" action="/api/image_create.php" enctype="multipart/form-data">
-    <ul>
-        <li>
-            <label for="label">Label</label>
-            <input id="label" name="label" type="text"/>
-        </li>
-        <li>
-            <label for="description">Description</label>
-            <textarea id="description" name="description" maxlength="250" rows="4"></textarea>
-        </li>
-        <li>
-            <label for="file">Image</label>
-            <input id="file" name="file" type="file"/>
-        </li>
-        <li>
-            <img src="" id="img-preview"/>
-        </li>
-    </ul>
-    <input type="submit" value="Upload"/>
-</form>
+
+<div id="form"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script src="/scripts/ui.js"></script>
+
+<script>
+    const uiFile = new UIFile('upload', 'Upload');
+    uiFile.appendTo('body');
+</script>
+
 </body>
 
 </html>

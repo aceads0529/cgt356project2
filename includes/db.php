@@ -61,10 +61,14 @@ function db_query($db, $query, $arg1 = null, ...$args)
     $stmt = $db->prepare($query);
 
     // Only bind params if arguments are given
-    if (strlen($arg_types) > 0)
+    if (strlen($arg_types) > 0) {
         call_user_func_array(array($stmt, 'bind_param'), $params);
+    }
 
-    $stmt->execute();
+    if ($stmt)
+        $stmt->execute();
+    else
+        return false;
 
     // Return result, or false on error
     $result = empty($stmt->error) ? $stmt->get_result() : false;

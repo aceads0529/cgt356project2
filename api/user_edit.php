@@ -11,7 +11,7 @@ $db = db_connect();
 $user = db_query($db, 'SELECT * FROM users WHERE UserId=?', $params['user-id'])->fetch_assoc();
 
 // Check if username already exists
-if (!empty($params['username']) && user_exists($db, $params['username']))
+if (!empty($params['username']) && ($user['Login'] != $params['username'] && user_exists($db, $params['username'])))
     api_response(false, sprintf('Username "%s" is already taken', $params['username']));
 
 // If new password is provided, salt and hash

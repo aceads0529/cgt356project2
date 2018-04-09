@@ -70,7 +70,7 @@ function get_user_categories($userId)
 }
 
 /**
- * Adds categories from array, and deletes all others
+ * Adds permission to categories from array, and removes all others
  *
  * @param int $userId
  * @param array $categories
@@ -80,15 +80,11 @@ function set_user_categories($userId, $categories)
     if (empty($categories))
         $categories = [];
 
-    $all_categories = get_all_categories();
-
-    foreach ($all_categories as $cat) {
-        $catId = $cat['CategoryId'];
-
-        if (in_array($catId, $categories))
-            add_user_category($userId, $catId);
+    foreach ($categories as $categoryId => $value) {
+        if ($value == 'true')
+            add_user_category($userId, $categoryId);
         else
-            remove_user_category($userId, $catId);
+            remove_user_category($userId, $categoryId);
     }
 }
 
