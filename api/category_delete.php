@@ -1,10 +1,11 @@
 <?php
-include '../includes/db.php';
+include '../includes/user.php';
 include '../includes/utils.php';
 
-// TODO: Authorization
-
 list($params, $num_empty) = safe_post_read('category-id');
+
+if(!user_is_authorized(get_active_user_id(),AUTH_CATEGORY_DELETE))
+    api_response(false, ERR_NOT_AUTHORIZED);
 
 if ($num_empty > 0)
     api_response(false, ERR_NO_CATEGORYID);
