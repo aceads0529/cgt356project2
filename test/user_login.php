@@ -8,9 +8,9 @@
 
 <body>
 <h1>Login</h1>
-<div id="message"></div>
 
 <form id="form" onsubmit="onSubmit(event)">
+    <div id="message"></div>
     <input type="submit" value="Submit"/>
 </form>
 
@@ -21,10 +21,13 @@
 <script>
     const form = new UIGroup('form');
 
+    var textbox = new UITextbox('hello', 'Hello');
+    textbox.value('Aaron Eads');
+
     form.add(new UITextbox('username', 'Username'));
     form.add(new UITextbox('password', 'Password', 'password'));
 
-    form.appendTo('#form');
+    form.prependTo('#form');
 
     function onSubmit(event) {
         event.preventDefault();

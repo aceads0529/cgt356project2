@@ -29,8 +29,17 @@ $active_user = get_active_user();
     const form = new UIGroup('form');
     const categories = form.add(new UIGroup('categories'));
 
+    let textbox = new UITextbox('hello', 'Hello');
+    textbox.value('Aaron Eads');
+
+    let group = new UIGroup('group');
+    group.add(textbox);
+    group.add(new UICheckbox('checkbox', 'Checkbox'));
+
     // AJAX get user by ID
     $.post('/api/user_select.php', {selection: 11}, function (result) {
+        console.log(result);
+
         if (!result.success) {
             $('#message').text(result.error);
             return;
@@ -69,6 +78,8 @@ $active_user = get_active_user();
 
         let params = form.value();
         params['user-id'] = 11;
+
+        console.log(params);
 
         // Verify passwords match
         if ((params['password'] || params['password-confirm']) && (params['password-confirm']) !== params['password']) {

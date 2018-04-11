@@ -10,7 +10,12 @@ function UIControl(id, label) {
     this.appendTo = function (selector = 'body') {
         if (this.hasOwnProperty('element'))
             $(selector).append(this.element);
-    }
+    };
+
+    this.prependTo = function (selector = 'body') {
+        if (this.hasOwnProperty('element'))
+            $(selector).prepend(this.element);
+    };
 }
 
 function UITextbox(id, label, type = 'text') {
@@ -101,6 +106,13 @@ function UIGroup(id) {
         for (let i = 0; i < controls.length; i++) {
             if (controls[i].hasOwnProperty('appendTo'))
                 controls[i].appendTo(selector);
+        }
+    }
+
+    this.prependTo = function (selector) {
+        for (let i = controls.length - 1; i >= 0; i--) {
+            if (controls[i].hasOwnProperty('prependTo'))
+                controls[i].prependTo(selector);
         }
     }
 }

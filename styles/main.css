@@ -9,8 +9,33 @@
 body {
     color: #eee;
     background: #223;
-    margin: 50px;
     font: 14px 'Montserrat Medium', sans-serif;
+}
+
+header {
+    background: #334;
+    height: 240px;
+    padding: 50px;
+}
+
+nav {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+}
+
+nav ul {
+    display: inline-flex;
+    list-style: none;
+    max-width: 800px;
+}
+
+nav ul li {
+    flex: 1 1 auto;
+}
+
+nav ul li a {
+    text-decoration: none;
 }
 
 h1 {
