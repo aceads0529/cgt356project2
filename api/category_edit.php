@@ -2,6 +2,8 @@
 include '../includes/db.php';
 include '../includes/utils.php';
 
+
+
 list($params, $num_empty) = safe_post_read('category-id', 'label?', 'description?');
 
 if ($num_empty > 0)

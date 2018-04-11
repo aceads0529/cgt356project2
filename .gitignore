@@ -1,1 +1,19 @@
+<<<<<<< HEAD
 **/.idea
+=======
+
+.idea/dataSources.local.xml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/cgt356project2.iml
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/02bec3bd-8325-4fad-a99f-4f694949e8d0.xml
+.idea/dictionaries/Purdue_University.xml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/watcherTasks.xml
+.idea/workspace.xml
+>>>>>>> 65a76a68c98608e77f10ea778079e94b658ea58a
