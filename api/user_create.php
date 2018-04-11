@@ -1,8 +1,8 @@
 <?php
 include '../includes/utils.php';
-include '../includes/db.php';
+include '../includes/user.php';
 
-if (!user_is_authorized('admin'))
+if (!user_is_authorized(get_active_user_id(), AUTH_USER_CREATE))
     api_response(false, ERR_NOT_AUTHORIZED);
 
 list($params, $num_empty) = safe_post_read('username', 'password', 'acct-type', 'first-name', 'last-name');

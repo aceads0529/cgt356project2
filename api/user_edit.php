@@ -4,6 +4,9 @@ include '../includes/user.php';
 
 list($params, $num_empty) = safe_post_read('user-id', 'username?', 'password?', 'first-name?', 'last-name?', 'categories?');
 
+if (!user_is_authorized($params['user-id'], AUTH_USER_EDIT))
+    api_response(false, ERR_NOT_AUTHORIZED);
+
 if ($num_empty > 0)
     api_response(false, ERR_NO_USERID);
 
