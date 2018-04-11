@@ -1,8 +1,11 @@
 <?php
-include '../includes/db.php';
+include '../includes/user.php';
 include '../includes/utils.php';
 
 list($params, $num_empty) = safe_post_read('label', 'description?');
+
+if(!user_is_authorized(get_active_user_id(),AUTH_CATEGORY_CREATE))
+    api_response(false, ERR_NOT_AUTHORIZED);
 
 if ($num_empty > 0)
     api_response(false, ERR_REQUIRED_FIELDS);
