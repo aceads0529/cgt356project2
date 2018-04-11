@@ -129,6 +129,7 @@ function user_has_category($userId, $categoryId)
  * @param string $required
  * @return bool
  */
+/*
 function user_is_authorized($required)
 {
     safe_session_start();
@@ -150,5 +151,35 @@ function user_is_authorized($required)
             return $acct_type == 'admin';
         default:
             return false;
+    }
+}
+*/
+
+define('AUTH_USER_CREATE', 0);
+define('AUTH_USER_EDIT', 1);
+define('AUTH_USER_DELETE', 2);
+define('AUTH_CATEGORY_CREATE', 3);
+define('AUTH_CATEGORY_EDIT', 4);
+define('AUTH_CATEGORY_DELETE', 5);
+
+function user_is_authorized($context, $auth_mode)
+{
+    $user = get_active_user();
+
+    if (!$user)
+        return false;
+
+    switch ($auth_mode) {
+        case AUTH_USER_CREATE:
+            return $user['AcctType'] == 'ADMIN';
+        case AUTH_USER_EDIT:
+        case AUTH_USER_DELETE:
+            return $user['AcctType'] == 'ADMIN' || $user['UserId'] == $context;
+
+        case AUTH_CATEGORY_CREATE:
+        case AUTH_CATEGORY_DELETE:
+            return $user['AcctType'] == 'ADMIN';
+        case AUTH_CATEGORY_EDIT:
+            return $user['AcctType'] == 'ADMIN' || user_has_category($user['UserId'], $context);
     }
 }
