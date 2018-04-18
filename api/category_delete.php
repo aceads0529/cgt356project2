@@ -4,7 +4,7 @@ include '../includes/utils.php';
 
 list($params, $num_empty) = safe_post_read('category-id');
 
-if(!user_is_authorized(get_active_user_id(),AUTH_CATEGORY_DELETE))
+if(!user_is_authorized(null,AUTH_CATEGORY_DELETE))
     api_response(false, ERR_NOT_AUTHORIZED);
 
 if ($num_empty > 0)
