@@ -5,6 +5,9 @@ include '../includes/image.php';
 
 list($params, $num_empty) = safe_post_read('label', 'description?', 'category-id');
 
+if(!user_is_authorized($params['category-id'],AUTH_IMAGE_CREATE))
+    api_response(false, ERR_NOT_AUTHORIZED);
+
 if ($num_empty > 0)
     api_response(false, ERR_REQUIRED_FIELDS);
 

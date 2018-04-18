@@ -161,6 +161,8 @@ define('AUTH_USER_DELETE', 2);
 define('AUTH_CATEGORY_CREATE', 3);
 define('AUTH_CATEGORY_EDIT', 4);
 define('AUTH_CATEGORY_DELETE', 5);
+define('AUTH_IMAGE_CREATE', 6);
+define('AUTH_IMAGE_EDIT', 7);
 
 function user_is_authorized($context, $auth_mode)
 {
@@ -181,5 +183,9 @@ function user_is_authorized($context, $auth_mode)
             return $user['AcctType'] == 'ADMIN';
         case AUTH_CATEGORY_EDIT:
             return $user['AcctType'] == 'ADMIN' || user_has_category($user['UserId'], $context);
+
+        case AUTH_IMAGE_CREATE:
+        case AUTH_IMAGE_EDIT:
+            return $user['AcctType'] == 'ADMIN';
     }
 }
