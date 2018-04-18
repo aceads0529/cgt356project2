@@ -21,7 +21,7 @@ function UIControl(id, label) {
 function UITextbox(id, label, type = 'text') {
     UIControl.call(this, id, label);
 
-    let templInput = '<input type="#type#"/>';
+    let templInput = '<input type="#type#" name="#id#"/>';
     let templTextbox = '<div class="textbox-container"><label for="#id#">#label#</label></div>';
 
     this.input = $(templInput.replace(/#id#/g, id).replace(/#type#/g, type))[0];
@@ -67,7 +67,7 @@ function UICheckbox(id, label) {
 function UIFile(id, label) {
     UIControl.call(this, id, label);
 
-    let templFile = '<div class="file-container"><button id="#id#">#label#</button><input id="ghost-#id#" type="file"/></div>';
+    let templFile = '<div class="file-container"><button id="#id#">#label#</button><input id="ghost-#id#" name="#id#" type="file"/></div>';
     this.element = $(templFile.replace(/#id#/g, id).replace(/#label#/g, label))[0];
 
     $(this.element).find('#' + id).click(() => {

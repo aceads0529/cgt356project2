@@ -3,10 +3,19 @@ include '../includes/db.php';
 include '../includes/utils.php';
 include '../includes/image.php';
 
-list($params, $num_empty) = safe_post_read('label', 'description?', 'category-id');
+list($params, $num_empty) = safe_post_read('image-id', 'label', 'description?', 'category-id');
 
 if ($num_empty > 0)
     api_response(false, ERR_REQUIRED_FIELDS);
+
+$db = db_connect();
+
+if ($image = db_query($db, 'SELECT * FROM images WHERE ImageId=?', $params['image-id'])) {
+    if (isset($_FILES['upload']))
+        upload_image($_FILES['upload'], $image['Filename']);
+
+    db_query($db, 'UPDATE images SET Label=?, Description=?, CategoryId=?', $params['label'], $params['description'], $params['category-id']);
+}
 
 $filename = upload_image($_FILES['upload']);
 

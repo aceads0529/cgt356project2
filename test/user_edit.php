@@ -37,7 +37,7 @@ $active_user = get_active_user();
     group.add(new UICheckbox('checkbox', 'Checkbox'));
 
     // AJAX get user by ID
-    $.post('/api/user_select.php', {selection: 11}, function (result) {
+    $.post('/api/user_select.php', {selection: 13}, function (result) {
         console.log(result);
 
         if (!result.success) {
@@ -77,7 +77,7 @@ $active_user = get_active_user();
         event.preventDefault();
 
         let params = form.value();
-        params['user-id'] = 11;
+        params['user-id'] = 13;
 
         console.log(params);
 

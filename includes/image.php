@@ -5,9 +5,10 @@
  * Returns the image filename, or false if unsuccessful
  *
  * @param array $file
+ * @param string $filename
  * @return bool|string
  */
-function upload_image($file)
+function upload_image($file, $filename = null)
 {
     if (!is_image($file))
         return false;
@@ -18,7 +19,8 @@ function upload_image($file)
         $large = resize($image, 960, 960);
         $thumb = resize($image, 320, 320);
 
-        $filename = generate_filename($_FILES['file']) . '.jpg';
+        if (!$filename)
+            $filename = generate_filename($file) . '.jpg';
 
         // All files are stored as jpeg images
         imagejpeg($large, '../image_uploads/large/' . $filename, 90);
