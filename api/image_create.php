@@ -11,7 +11,7 @@ if ($num_empty > 0)
 $filename = upload_image($_FILES['upload']);
 
 if (!$filename)
-    api_response(false, 'Image upload failed');
+    api_response(false, 'Image upload failed. Image must be a .jpg or .png');
 
 db_connect_query('INSERT INTO images (CategoryId, Label, Description, Filename) VALUES (?, ?, ?, ?)',
     $params['category-id'],
