@@ -1,0 +1,25 @@
+/*div {
+  border: 1px solid black;
+}*/
+
+* {
+  color: white;
+}
+
+.menu {
+  background-color: rgb(190, 23, 51);
+  border-top: ;
+}
+
+.one, .two, .three {
+  margin-top: 3.5%;
+  font-family: "Bauhaus 93", sans-serf;
+}
+
+.logo {
+	width: 738px;
+	height: 100px;
+	margin: 0 auto;
+	position: absolute;
+	right: 2px;
+}
