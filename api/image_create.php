@@ -11,5 +11,5 @@ if ($num_empty > 0)
 $filename = upload_image($_FILES['file']);
 
 if (!$filename)
-    api_response(false, 'Image upload failed');
+    api_response(false, 'Image upload failed. Image must be a .jpg or .png');
 
