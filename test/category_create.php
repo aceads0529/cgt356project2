@@ -1,3 +1,13 @@
+<?php
+include '../includes/utils.php';
+include '../includes/user.php';
+
+$active_user = get_active_user();
+
+if (!$active_user)
+    header('Location: ../test/user_login.php')
+?>
+
 <!DOCTYPE html>
 <html>
 
