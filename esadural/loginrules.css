@@ -21,8 +21,10 @@ label {
 
 input {
 	display: block;
+	color: black;
 }
 
 #submit {
 	color: black;
 }
+
