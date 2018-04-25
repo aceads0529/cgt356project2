@@ -26,12 +26,10 @@ div {
 
 .galleryitem {
   height: 200px;
-  background-color: 
 }
 
 
 .secondlayer {
-  width: ;
   height: 170px;
   margin-top: 5%;
   background-color: #a9a9aa;
@@ -51,6 +49,5 @@ div {
   .galleryitem {
     width: 500px;
     height: 209px;
-    background-color: 
   }
 }
