@@ -1,34 +1,32 @@
 div, .logo {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 * {
-  color: white;
+    color: white;
 }
 
 .menu {
-  background-color: rgb(190, 23, 51);
-  height: 145px;
+    background-color: rgb(190, 23, 51);
+    height: 145px;
 }
 
 .one, .two, .three {
-  margin-top: 5.5%;
-  font-family: "Bauhaus 93", sans-serif;
+    margin-top: 5.5%;
+    font-family: "Bauhaus 93", sans-serif;
 }
 
 .three h3 {
-	float: right;
+    float: right;
 }
 
-.four {
-	;
+.four {;
 }
-
 
 .logo {
-	width: 700px;
-	height: inherit;
-	margin: 0 auto;
-	position: absolute;
-	right: 6px;
+    width: 700px;
+    height: inherit;
+    margin: 0 auto;
+    position: absolute;
+    right: 6px;
 }
