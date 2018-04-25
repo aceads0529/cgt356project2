@@ -10,3 +10,15 @@ body {
 	font-family: "Bauhaus 93", sans-serf;
 	color: white;
 }
+
+label {
+	display: inline-block;
+	float: left;
+	width: 125px;
+	text-align: right;
+	margin-right: 20px;
+}
+
+input {
+	display: block;
+}
