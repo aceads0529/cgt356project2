@@ -1,0 +1,56 @@
+.entire, .galleryitem, .mainimage {
+  background-color: #323233;
+}
+
+div {
+  border: 1px solid black;
+}
+
+.container-fluid {
+  width: 80%;
+  background-color: white;
+}
+
+.first, .second {
+  width: inherit;
+  margin: auto;
+}
+
+.first {
+  margin-bottom: 6%;
+}
+
+.mainimage {
+  
+}
+
+.galleryitem {
+  height: 200px;
+  background-color: 
+}
+
+
+.secondlayer {
+  width: ;
+  height: 170px;
+  margin-top: 5%;
+  background-color: #a9a9aa;
+}
+
+#mainimagesecondlayer {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+@media only screen and (min-width: 1080px) {
+  #two {
+    margin-left: 19.8%;
+    margin-right: 0;
+  }
+  
+  .galleryitem {
+    width: 500px;
+    height: 209px;
+    background-color: 
+  }
+}
