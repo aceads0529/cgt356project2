@@ -21,5 +21,15 @@ label {
 
 input {
 	display: block;
+<<<<<<< HEAD
     color: rgb(190, 23, 51);
 }
+=======
+	color: black;
+}
+
+#submit {
+	color: black;
+}
+
+>>>>>>> e4a094f4b29c2921dd6a253772e196f4d0f3f9c2
