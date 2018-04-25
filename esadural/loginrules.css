@@ -19,7 +19,7 @@ label {
 	margin-right: 20px;
 }
 
-input {
+input, textarea {
 	display: block;
 	color: black;
 }
