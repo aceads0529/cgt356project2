@@ -22,3 +22,7 @@ label {
 input {
 	display: block;
 }
+
+#submit {
+	color: black;
+}
