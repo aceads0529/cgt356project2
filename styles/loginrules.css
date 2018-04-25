@@ -1,5 +1,5 @@
 body {
-	background-image: url("whitemarble.jpg");
+	background-image: url("images/whitemarble.jpg");
 }
 
 .container-fluid {
@@ -7,8 +7,9 @@ body {
 	margin: 0 auto;
 	border: 1px solid black;
 	background-color: rgb(190, 23, 51);
-	font-family: "Bauhaus 93", sans-serf;
+	font-family: "Bauhaus 93", sans-serif;
 	color: white;
+    padding: 10px;
 }
 
 label {
@@ -19,17 +20,11 @@ label {
 	margin-right: 20px;
 }
 
-input, textarea {
+input {
 	display: block;
-<<<<<<< HEAD
-    color: rgb(190, 23, 51);
-}
-=======
-	color: black;
+    color: black;
 }
 
-#submit {
-	color: black;
+.message {
+    margin-bottom: 10px;
 }
-
->>>>>>> e4a094f4b29c2921dd6a253772e196f4d0f3f9c2
