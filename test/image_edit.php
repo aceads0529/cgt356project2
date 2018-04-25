@@ -1,4 +1,11 @@
 <?php
+<<<<<<< HEAD
+include '../includes/db.php';
+include '../includes/utils.php';
+
+$_GET['ImageId'] = 4;
+
+=======
 include '../includes/utils.php';
 include '../includes/user.php';
 
@@ -7,6 +14,7 @@ $active_user = get_active_user();
 //checks if someone is logged in, won't be present on pages that basic users can access
 if (!$active_user)
     header('Location: user_login.php')
+>>>>>>> 37c61acaca32bccc50de3d115c01866a6f64b721
 ?>
 
 <!DOCTYPE html>
@@ -68,14 +76,15 @@ if (!$active_user)
 <h1>Upload Image</h1>
 <div id="message"></div>
 
-<form id="form" method="post" action="/api/image_create.php" enctype="multipart/form-data">
-    <?php
-    include '../includes/db.php';
-    include '../includes/utils.php';
+<?php
+$image = db_connect_query('SELECT * FROM images WHERE ImageId=?', $_GET['ImageId'])->fetch_assoc();
+?>
 
-    $categories = get_all_categories();
-    ?>
-    <select name="category-id">
+<form id="form" method="post" action="/api/image_edit.php" enctype="multipart/form-data">
+    <?php $categories = get_all_categories(); ?>
+
+    <input type="text" name="image-id" value="<?php echo $image['ImageId']; ?>"/>
+    <select id="category" name="category-id">
         <?php foreach ($categories as $cat): ?>
             <option value="<?php echo $cat['CategoryId']; ?>"><?php echo $cat['Label']; ?></option>
         <?php endforeach; ?>
@@ -88,12 +97,16 @@ if (!$active_user)
 <script src="/scripts/ui.js"></script>
 
 <script>
-    const uiLabel = new UITextbox('label', 'Label');
-    const uiDescr = new UITextbox('description', 'Description');
+
+    const uiLabel = new UITextbox('label', 'Label').value('<?php echo addslashes($image['Label']); ?>');
+    const uiDescr = new UITextbox('description', 'Description').value('<?php echo addslashes($image['Description']); ?>');
     const uiFile = new UIFile('upload', 'Upload');
+
     uiLabel.prependTo('#form');
     uiDescr.prependTo('#form');
     uiFile.prependTo('#form');
+
+    $('#category').val(<?php echo $image['CategoryId']; ?>);
 </script>
 
 </body>

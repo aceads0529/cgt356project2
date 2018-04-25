@@ -8,7 +8,7 @@
  * @param string $filename
  * @return bool|string
  */
-function upload_image($file, $filename = null)
+function upload_image($file, $category_id, $filename = false)
 {
     if (!is_image($file))
         return false;
@@ -19,8 +19,10 @@ function upload_image($file, $filename = null)
         $large = resize($image, 960, 960);
         $thumb = resize($image, 320, 320);
 
-        if (!$filename)
-            $filename = generate_filename($file) . '.jpg';
+        if (!$filename) {
+            $category = db_connect_query('SELECT Label FROM categories WHERE CategoryId=?', $category_id)->fetch_assoc();
+            $filename = generate_filename($file, $category['Label']) . '.jpg';
+        }
 
         // All files are stored as jpeg images
         imagejpeg($large, '../image_uploads/large/' . $filename, 90);
@@ -48,12 +50,13 @@ function is_image($file)
  * Returns a unique filename
  *
  * @param array $file
+ * @param string $prefix
  * @return string
  */
-function generate_filename($file)
+function generate_filename($file, $prefix = 'image')
 {
     // md5 ensures a unique filename every time
-    return md5($file['name'] . (string)time());
+    return $prefix . '_' . md5($file['name'] . (string)time());
 }
 
 /**
