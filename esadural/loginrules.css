@@ -1,0 +1,9 @@
+body {
+	background-image: url("whitemarble.jpg");
+}
+
+.container-fluid {
+	width: 70%;
+	margin: 0 auto;
+	border: 1px solid black;
+}

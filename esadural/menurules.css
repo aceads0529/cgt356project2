@@ -1,6 +1,6 @@
-/*div {
+div, .logo {
   border: 1px solid black;
-}*/
+}
 
 * {
   color: white;
@@ -9,17 +9,27 @@
 .menu {
   background-color: rgb(190, 23, 51);
   border-top: ;
+  height: 145px;
 }
 
 .one, .two, .three {
-  margin-top: 3.5%;
+  margin-top: 5.5%;
   font-family: "Bauhaus 93", sans-serf;
 }
 
+.three h3 {
+	float: right;
+}
+
+.four {
+	;
+}
+
+
 .logo {
-	width: 738px;
-	height: 100px;
+	width: 700px;
+	height: inherit;
 	margin: 0 auto;
 	position: absolute;
-	right: 2px;
+	right: 6px;
 }
