@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 include '../includes/db.php';
 include '../includes/utils.php';
 

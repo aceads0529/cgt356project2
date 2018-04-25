@@ -7,7 +7,7 @@ $active_user = get_active_user();
 
 //checks if someone is logged in, won't be present on pages that basic users can access
 if (!$active_user)
-    header('Location: ../test/user_login.php')
+    header('Location: user_login.php')
 ?>
 
 <!DOCTYPE html>

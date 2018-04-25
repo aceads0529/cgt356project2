@@ -7,6 +7,9 @@ print_r($_FILES);
 
 list($params, $num_empty) = safe_post_read('image-id', 'label', 'description?', 'category-id');
 
+if(!user_is_authorized($params['category-id'],AUTH_IMAGE_EDIT))
+    api_response(false, ERR_NOT_AUTHORIZED);
+
 if ($num_empty > 0)
     api_response(false, ERR_REQUIRED_FIELDS);
 
