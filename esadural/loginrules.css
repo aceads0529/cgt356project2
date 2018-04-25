@@ -21,11 +21,7 @@ label {
 
 input, textarea {
 	display: block;
-<<<<<<< HEAD
-    color: rgb(190, 23, 51);
-}
-=======
-	color: black;
+    color: black;
 }
 
 #submit {
