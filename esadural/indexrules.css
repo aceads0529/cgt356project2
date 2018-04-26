@@ -2,6 +2,14 @@
   background-color: #323233;
 }
 
+.item {
+  background-image: url("whitemarble.jpg");
+}
+
+div {
+  border: 1px solid black;
+}
+
 div {
   border: 1px solid black;
 }
