@@ -1,5 +1,24 @@
 <?php
-include 'db.php';
+include_once 'db.php';
+include_once 'utils.php';
+
+/**
+ * Generates an empty user array
+ *
+ * @return array
+ */
+function user_empty()
+{
+    return [
+        'UserId' => -1,
+        'AcctType' => '',
+        'Login' => '',
+        'PswdHash' => '',
+        'PswdSalt' => '',
+        'FirstName' => '',
+        'LastName' => ''
+    ];
+}
 
 /**
  * Returns whether a username already exists in the database
@@ -60,11 +79,13 @@ function get_user_by_id($userId)
  */
 function get_user_categories($userId)
 {
-    $query = db_connect_query('SELECT * FROM permissions WHERE UserId=?', $userId);
+    $db = db_connect();
+    $query = db_query($db, 'SELECT CategoryId FROM permissions WHERE UserId=?', $userId);
     $result = [];
 
-    while ($row = $query->fetch_assoc())
-        $result[] = $row;
+    while ($row = $query->fetch_assoc()) {
+        $result[] = db_query($db, 'SELECT * FROM categories WHERE CategoryId=?', $row['CategoryId'])->fetch_assoc();
+    }
 
     return $result;
 }
@@ -77,6 +98,11 @@ function get_user_categories($userId)
  */
 function set_user_categories($userId, $categories)
 {
+    $user = get_user_by_id($userId)->fetch_assoc();
+
+    if ($user['AcctType'] != 'CURATOR')
+        return;
+
     if (empty($categories))
         $categories = [];
 
@@ -123,38 +149,6 @@ function user_has_category($userId, $categoryId)
     return db_connect_query('SELECT * FROM permissions WHERE UserId=? AND CategoryId=?', $userId, $categoryId)->num_rows > 0;
 }
 
-/**
- * Returns whether the active user has the required account type (curator or admin)
- *
- * @param string $required
- * @return bool
- */
-/*
-function user_is_authorized($required)
-{
-    safe_session_start();
-
-    // If no user is logged in, assume not authorized
-    if (!isset($_SESSION['user-id']))
-        return false;
-
-    $acct_type = db_connect_query('SELECT AcctType FROM users WHERE UserId=?', $_SESSION['user-id'])->fetch_assoc()['AcctType'];
-
-    $acct_type = strtolower($acct_type);
-    $required = strtolower($required);
-
-    // $required specifies minimum requirement (i.e. an admin is authorized if a curator is required)
-    switch ($required) {
-        case 'curator':
-            return $acct_type == 'curator' || $acct_type == 'admin';
-        case 'admin':
-            return $acct_type == 'admin';
-        default:
-            return false;
-    }
-}
-*/
-
 define('AUTH_USER_CREATE', 0);
 define('AUTH_USER_EDIT', 1);
 define('AUTH_USER_DELETE', 2);
@@ -164,6 +158,13 @@ define('AUTH_CATEGORY_DELETE', 5);
 define('AUTH_IMAGE_CREATE', 6);
 define('AUTH_IMAGE_EDIT', 7);
 
+/**
+ * Returns whether a user is authorized to perform an action
+ *
+ * @param mixed $context
+ * @param int $auth_mode
+ * @return bool
+ */
 function user_is_authorized($context, $auth_mode)
 {
     $user = get_active_user();
@@ -176,7 +177,7 @@ function user_is_authorized($context, $auth_mode)
             return $user['AcctType'] == 'ADMIN';
         case AUTH_USER_EDIT:
         case AUTH_USER_DELETE:
-            return $user['AcctType'] == 'ADMIN' || $user['UserId'] == $context;
+            return get_user_by_id($context)->fetch_assoc()['AcctType'] != 'ADMIN' && ($user['AcctType'] == 'ADMIN' || $user['UserId'] == $context);
 
         case AUTH_CATEGORY_CREATE:
         case AUTH_CATEGORY_DELETE:

@@ -1,0 +1,105 @@
+.form-container {
+    margin: 50px auto;
+    max-width: 500px;
+}
+
+form {
+    margin: 20px;
+    background: #b13;
+    padding: 40px;
+    border-bottom: 4px solid #901;
+}
+
+form .title {
+    font-family: 'Bauhaus 93', sans-serif;
+    font-size: 2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+form .message {
+    height: 20px;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.textbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+label {
+    flex: 0 0 150px;
+    font-weight: bold;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    flex: 1 1 150px;
+    border: none;
+    border-bottom: 2px solid #901;
+    padding: 5px;
+    outline: none;
+    color: #b13;
+}
+
+button, input[type=submit] {
+    background: #fff;
+    color: #b13;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #901;
+    padding: 5px;
+    min-width: 100px;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:active, input[type=submit]:active {
+    background: #eee;
+}
+
+input[type=submit] {
+    margin-top: 40px;
+}
+
+select {
+    padding: 4px;
+    color: #b13;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #901;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.checkbox-container {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.checkbox-clickable {
+    height: 30px;
+    flex: 0 0 30px;
+    border-bottom: 2px solid #901;
+    background: white;
+    transition: transform 100ms;
+    cursor: pointer;
+}
+
+.checkbox-clickable:active {
+    transform: scale(0.9);
+}
+
+.checkbox-clickable.checked {
+    background: white url('images/ui_checkbox.png') no-repeat center;
+}
+
+.checkbox-container label {
+    flex: 0 1 auto;
+    padding: 15px;
+}

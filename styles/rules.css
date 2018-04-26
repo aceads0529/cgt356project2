@@ -8,7 +8,8 @@ div {
 
 .container-fluid {
   width: 80%;
-    background: white url("../esadural/whitemarble.jpg");
+  background-color: white;
+  background-image: url("../esadural/whitemarble.jpg");
 }
 
 
@@ -26,6 +27,7 @@ div {
   margin-left: 5%;
   max-width: 250px;
   height: 250px;
+  background-color: white;
   border: 20px solid #a9a9aa;
 }
 

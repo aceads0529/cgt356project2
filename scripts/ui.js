@@ -36,6 +36,10 @@ function UITextbox(id, label, type = 'text') {
             return this;
         }
     };
+
+    this.focus = function () {
+        this.input.focus();
+    };
 }
 
 function UICheckbox(id, label) {

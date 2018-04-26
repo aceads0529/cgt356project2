@@ -8,37 +8,146 @@
 
 body {
     color: #eee;
-    background: #223;
-    font: 14px 'Montserrat Medium', sans-serif;
+    font: 14px 'Montserrat', sans-serif;
+    font-weight: 500;
+    background: url('images/whitemarble.jpg') top center;
+}
+
+h1 {
+    font-family: 'Bauhaus 93', sans-serif;
+    font-size: 2em;
+    color: #b13;
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+i {
+    font-style: italic;
 }
 
 header {
-    background: #334;
-    height: 240px;
-    padding: 50px;
+    background: #b13;
+    border-bottom: 4px solid #901;
+}
+
+#page-logo {
+    background: url('images/page_logo.png') no-repeat center;
+    background-size: contain;
+    height: 100px;
 }
 
 nav {
-    text-transform: uppercase;
-    font-weight: bold;
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
+    font: 18px 'Bauhaus 93', sans-serif;
+    text-transform: uppercase;
 }
 
 nav ul {
-    display: inline-flex;
+    display: flex;
     list-style: none;
-    max-width: 800px;
 }
 
 nav ul li {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
+    padding: 20px;
 }
 
 nav ul li a {
     text-decoration: none;
 }
 
-h1 {
-    font-size: 3em;
-    margin-bottom: 50px;
+nav #login {
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+nav #greeting {
+    font: 14px 'Montserrat Medium', sans-serif;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+
+#toolbar {
+    color: #b13;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#toolbar ul {
+    max-width: 800px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+}
+
+#toolbar li {
+    flex: 0 1 auto;
+    padding: 10px 20px;
+}
+
+#toolbar li:last-child {
+    flex: 1 1 auto;
+    text-align: right;
+}
+
+#toolbar li:first-child {
+    font-weight: 700;
+    color: #333;
+}
+
+#toolbar li a {
+    text-decoration: none;
+}
+
+#page-content-container {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#page-content {
+    background: white;
+    color: #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    background: #eee;
+}
+
+table thead {
+    text-align: left;
+    font-weight: bold;
+    background: #b13;
+    color: #fff;
+}
+
+table th, table td {
+    padding: 10px;
+}
+
+tbody tr:nth-child(2n) {
+    background: #f6f6f6;
+}
+
+.link-add {
+    display: block;
+    margin: 20px 0;
+    color: #b13;
+    text-decoration: none;
+}
+
+.link-add:hover {
+    text-decoration: underline;
 }

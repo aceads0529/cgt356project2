@@ -1,3 +1,2 @@
-<?php
-echo phpinfo();
-exit;
+<?php include 'header.php'; ?>
+<?php include 'footer.php'; ?>
