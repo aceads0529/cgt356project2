@@ -22,6 +22,10 @@ label {
 
 input, textarea {
 	display: block;
+=======
+input {
+    display: block;
+>>>>>>> b6d80fba5ed07158c4039434e506e035eb0a5017
     color: black;
 }
 
