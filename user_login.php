@@ -24,7 +24,7 @@
 <script>
     const form = new UIGroup('form');
     const username = new UITextbox('username', 'Username');
-    const password = new UITextbox('password', 'Password');
+    const password = new UITextbox('password', 'Password', 'password');
 
     form.add(username);
     form.add(password);
