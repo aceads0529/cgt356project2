@@ -45,13 +45,14 @@ nav {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    font: 18px 'Bauhaus 93', sans-serif;
+    font: 1.2em 'Bauhaus 93', sans-serif;
     text-transform: uppercase;
 }
 
 nav ul {
     display: flex;
     list-style: none;
+    flex-wrap: wrap;
 }
 
 nav ul li {
@@ -85,6 +86,7 @@ nav #greeting {
     margin: 0 auto;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
 }
 
 #toolbar li {
@@ -150,4 +152,10 @@ tbody tr:nth-child(2n) {
 
 .link-add:hover {
     text-decoration: underline;
+}
+
+@media(max-width: 640px) {
+    body {
+        font-size: 12px;
+    }
 }

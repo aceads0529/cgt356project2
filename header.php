@@ -13,6 +13,8 @@ $active_user = get_active_user();
 
         <title>Sauce & Co.</title>
 
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:500,500i,700" rel="stylesheet">
+
         <link href="styles/main.css" rel="stylesheet"/>
         <link href="styles/forms.css" rel="stylesheet"/>
 
