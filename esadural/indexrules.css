@@ -2,7 +2,7 @@
   background-color: #323233;
 }
 
-.item {
+.entire {
   background-image: url("whitemarble.jpg");
 }
 
@@ -21,15 +21,24 @@ div {
 
 .first, .second {
   width: inherit;
-  margin: auto;
+  width: 100%;
 }
 
 .first {
   margin-bottom: 6%;
 }
 
+.mainimage {
+  margin-top: 30px;
+  margin-left: 2%;
+}
+
 .galleryitem {
   height: 200px;
+}
+
+#two {
+  margin-left: 16.655%;
 }
 
 
@@ -44,14 +53,3 @@ div {
   margin-bottom: 2%;
 }
 
-@media only screen and (min-width: 1080px) {
-  #two {
-    margin-left: 19.8%;
-    margin-right: 0;
-  }
-  
-  .galleryitem {
-    width: 500px;
-    height: 209px;
-  }
-}
