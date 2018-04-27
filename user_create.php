@@ -1,5 +1,9 @@
 <?php
 include_once 'includes/utils.php';
+include_once 'includes/user.php';
+
+if (!user_is_authorized(null, AUTH_USER_CREATE))
+    redirect_login();
 
 if (!isset($_GET['acct-type']))
     $_GET['acct-type'] = 'CURATOR';
@@ -48,7 +52,7 @@ if (!isset($_GET['acct-type']))
         function onSubmit(event) {
             event.preventDefault();
 
-            var values = form.value();
+            let values = form.value();
             values['acct-type'] = '<?php echo $_GET['acct-type']; ?>';
 
             if (values['password'] !== values['password-confirm']) {

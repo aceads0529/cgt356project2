@@ -2,12 +2,17 @@
 include_once 'includes/utils.php';
 include_once 'includes/user.php';
 
-if (isset($_GET['user-id']))
-    $user_edit = get_user_by_id($_GET['user-id'])->fetch_assoc();
-else
-    $user_edit = user_empty();
+$user = read_get_id('user-id');
 
-include_once 'header.php'; ?>
+if (!$user)
+    redirect_back();
+
+if (!user_is_authorized($user['UserId'], AUTH_USER_EDIT))
+    redirect_login();
+?>
+<?php include_once 'header.php';
+global $store_url;
+$store_url = false; ?>
 
     <div class="form-container">
         <form id="form-create" onsubmit="onSubmit(event)">
@@ -21,11 +26,11 @@ include_once 'header.php'; ?>
 
     <script>
         const form = new UIGroup('form');
-        const username = new UITextbox('username', 'Username').value('<?php echo addslashes($user_edit['Login']); ?>');
+        const username = new UITextbox('username', 'Username').value('<?php echo addslashes($user['Login']); ?>');
         const password = new UITextbox('password', 'Change password', 'password');
         const passwordConfirm = new UITextbox('password-confirm', 'Password (confirm)', 'password');
-        const firstName = new UITextbox('first-name', 'First name').value('<?php echo addslashes($user_edit['FirstName']); ?>');
-        const lastName = new UITextbox('last-name', 'Last name').value('<?php echo addslashes($user_edit['LastName']); ?>');
+        const firstName = new UITextbox('first-name', 'First name').value('<?php echo addslashes($user['FirstName']); ?>');
+        const lastName = new UITextbox('last-name', 'Last name').value('<?php echo addslashes($user['LastName']); ?>');
 
         form.add(username);
         form.add(password);
@@ -33,7 +38,7 @@ include_once 'header.php'; ?>
         form.add(firstName);
         form.add(lastName);
 
-        <?php if ($user_edit['AcctType'] == 'CURATOR'): ?>
+        <?php if ($user['AcctType'] == 'CURATOR' && $active_user['AcctType'] == 'ADMIN'): ?>
         const categories = new UIGroup('categories');
 
         <?php $categories = get_all_categories();
@@ -50,9 +55,9 @@ include_once 'header.php'; ?>
         function onSubmit(event) {
             event.preventDefault();
 
-            var values = form.value();
-            values['acct-type'] = '<?php echo $user_edit['AcctType']; ?>';
-            values['user-id'] = '<?php echo $user_edit['UserId']; ?>';
+            let values = form.value();
+            values['acct-type'] = '<?php echo $user['AcctType']; ?>';
+            values['user-id'] = '<?php echo $user['UserId']; ?>';
 
             if (values['password'] !== values['password-confirm']) {
                 $('.message').text('Passwords do not match');
@@ -61,7 +66,7 @@ include_once 'header.php'; ?>
 
             $.post('api/user_edit.php', values, function (result) {
                 if (result.success) {
-                    window.location = '/user_admin.php';
+                    window.location = '<?php echo get_back_url(); ?>';
                 }
                 else {
                     $('.message').text(result.error);

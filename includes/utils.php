@@ -72,21 +72,11 @@ function generate_salt()
  * @param bool $success
  * @param string $error
  */
-function api_response($success, $error = '')
+function api_exit_response($success, $error = '')
 {
     header('Content-Type: application/json');
     echo json_encode(array('success' => $success, 'error' => $error));
     exit;
-}
-
-/**
- * @param mysqli $db
- * @param string $category
- * @return bool
- */
-function category_exists($db, $category)
-{
-    return db_query($db, 'SELECT * FROM categories WHERE Label=?', $category)->num_rows > 0;
 }
 
 /**
@@ -144,44 +134,13 @@ function get_all_categories()
     return $result;
 }
 
-function parse_selection_range($select, $column)
-{
-    if (empty($select))
-        return '';
-
-    $terms = explode(',', $select);
-    $query = ' WHERE ';
-
-    for ($i = 0; $i < count($terms); $i++) {
-        $term = $terms[$i];
-        $subquery = '';
-        $subterms = explode('-', $term);
-
-        if (count($subterms) == 1) {
-            if (!is_numeric($subterms[0]))
-                $subterms[0] = '`' . trim($subterms[0]) . '`';
-
-            $subquery = $column . '=' . trim($subterms[0]);
-        } elseif (count($subterms) == 2) {
-            $subquery = $column . '>=' . trim($subterms[0]) . ' AND ' . $column . '<=' . trim($subterms[1]);
-        }
-
-        if ($i != 0)
-            $query .= ' OR ';
-
-        $query .= '(' . $subquery . ')';
-    }
-
-    return $query;
-}
-
 /**
  * Returns user, category, or image from $_GET parameter, or false if unsuccessful
  *
  * @param string $param
  * @return bool
  */
-function get_from_id($param)
+function read_get_id($param)
 {
     if (!isset($_GET[$param]))
         return false;
@@ -208,4 +167,39 @@ function get_from_id($param)
         return false;
     else
         return $result->fetch_assoc();
+}
+
+/**
+ * Sets header location to the last URL
+ *
+ * @param string $message
+ */
+function redirect_back($message = '')
+{
+    header('Location: ' . get_back_url());
+    exit;
+}
+
+/**
+ * Returns the last URL, or index.php if unset
+ *
+ * @return string
+ */
+function get_back_url()
+{
+    safe_session_start();
+
+    if (!isset($_SESSION['last-url']))
+        return '/index.php';
+    else
+        return $_SESSION['last-url'];
+}
+
+/**
+ * Navigates to login page
+ */
+function redirect_login()
+{
+    header('Location: /user_login.php');
+    exit;
 }

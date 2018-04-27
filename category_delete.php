@@ -1,12 +1,14 @@
 <?php
 include_once 'includes/db.php';
+include_once 'includes/user.php';
 
-if (!isset($_GET['category-id'])) {
-    header('Location: index.php');
-    exit;
-}
+if (!user_is_authorized(null, AUTH_CATEGORY_DELETE))
+    redirect_login();
 
-$category = db_connect_query('SELECT * FROM categories WHERE CategoryId=?', $_GET['category-id']);
+$category = read_get_id('category-id');
+
+if (!$category)
+    redirect_back();
 
 if (!$category) {
     header('Location: index.php');
@@ -37,7 +39,7 @@ $category = $category->fetch_assoc();
         }
 
         function clickYes() {
-            $.post('api/category_delete.php', {'category-id': <?php echo $_GET['category-id']; ?>}, function (result) {
+            $.post('api/category_delete.php', {'category-id': <?php echo $_GET['category-id']; ?>}, function () {
                 window.location = '/category_admin.php';
             });
         }

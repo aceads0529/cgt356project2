@@ -55,8 +55,9 @@ function db_query($db, $query, $arg1 = null, ...$args)
     // bind_param must be called using call_user_func_array to allow variadic arguments
     $params[] = &$arg_types;
 
-    for ($i = 0; $i < count($args); $i++)
+    for ($i = 0; $i < count($args); $i++) {
         $params[] = &$args[$i];
+    }
 
     $stmt = $db->prepare($query);
 
@@ -97,4 +98,17 @@ function db_connect_query($query, $arg1 = null, ...$args)
     db_close($db);
 
     return $result;
+}
+
+/**
+ * Returns whether a row exists in the database
+ *
+ * @param string $table
+ * @param string $field
+ * @param $value
+ * @return bool
+ */
+function row_exists($table, $field, $value)
+{
+    return db_connect_query('SELECT * FROM ' . $table . ' WHERE ?=?', $field, $value)->num_rows > 0;
 }

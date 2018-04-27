@@ -4,14 +4,12 @@ include_once 'includes/category.php';
 include_once 'includes/image.php';
 include_once 'includes/user.php';
 
-$category = get_from_id('category-id');
+$category = read_get_id('category-id');
+
+if (!$category)
+    redirect_back();
+
 $can_edit = user_is_authorized($category['CategoryId'], AUTH_IMAGE_CREATE);
-
-if (!$category) {
-    header('Location: /index.php');
-    exit;
-}
-
 $images = get_category_images($category['CategoryId']);
 ?>
 <?php include_once 'header.php'; ?>
@@ -28,7 +26,7 @@ $images = get_category_images($category['CategoryId']);
         <?php endif; ?>
 
         <?php if ($can_edit): ?>
-            <a class="link-add" href="/image_upload.php?category-id=<?php echo $category['CategoryId']; ?>">+ Add
+            <a class="link-add" href="/image_create.php?category-id=<?php echo $category['CategoryId']; ?>">+ Add
                 image</a>
         <?php endif; ?>
 

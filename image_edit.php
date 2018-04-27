@@ -1,16 +1,20 @@
 <?php
 include_once 'includes/utils.php';
 include_once 'includes/image.php';
+include_once 'includes/user.php';
 
-$image = get_from_id('image-id');
+$image = read_get_id('image-id');
 
-if (!$image) {
-    header('Location: /index.php');
-    exit;
-}
+if (!$image)
+    redirect_back();
+
+if (!user_is_authorized($image['CategoryId'], AUTH_IMAGE_EDIT))
+    redirect_login();
 
 ?>
-<?php include_once 'header.php'; ?>
+<?php include_once 'header.php';
+global $store_url;
+$store_url = false; ?>
 
     <div class="form-container">
         <form onsubmit="onSubmit(event)" method="post" action="/api/image_edit.php" enctype="multipart/form-data">

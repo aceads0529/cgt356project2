@@ -1,0 +1,80 @@
+CREATE TABLE categories
+(
+  CategoryId  INT AUTO_INCREMENT
+    PRIMARY KEY,
+  Label       VARCHAR(50)  NULL,
+  Description VARCHAR(250) NULL,
+  CONSTRAINT categories_Label_uindex
+  UNIQUE (Label)
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE images
+(
+  ImageId     INT AUTO_INCREMENT
+    PRIMARY KEY,
+  CategoryId  INT               NULL,
+  Label       VARCHAR(50)       NULL,
+  Description VARCHAR(250)      NULL,
+  Filename    VARCHAR(100)      NOT NULL,
+  AspectRatio FLOAT DEFAULT '1' NULL,
+  CONSTRAINT images_Filename_uindex
+  UNIQUE (Filename),
+  CONSTRAINT images_categories_CategoryId_fk
+  FOREIGN KEY (CategoryId) REFERENCES categories (CategoryId)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+)
+  ENGINE = InnoDB;
+
+CREATE INDEX images_categories_CategoryId_fk
+  ON images (CategoryId);
+
+CREATE TABLE logging
+(
+  RemoteAddress  VARCHAR(100)                        NULL,
+  HttpHost       VARCHAR(100)                        NULL,
+  Timestamp      TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  AttemptedLogin VARCHAR(50)                         NULL,
+  HttpUserAgent  VARCHAR(200)                        NULL,
+  LoginSuccess   TINYINT(1)                          NULL
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE permissions
+(
+  UserId     INT NULL,
+  CategoryId INT NULL,
+  CONSTRAINT permissions_categories_CategoryId_fk
+  FOREIGN KEY (CategoryId) REFERENCES categories (CategoryId)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+)
+  ENGINE = InnoDB;
+
+CREATE INDEX permissions_users_UserId_fk
+  ON permissions (UserId);
+
+CREATE INDEX permissions_categories_CategoryId_fk
+  ON permissions (CategoryId);
+
+CREATE TABLE users
+(
+  UserId    INT AUTO_INCREMENT
+    PRIMARY KEY,
+  AcctType  ENUM ('CURATOR', 'ADMIN') NULL,
+  Login     VARCHAR(50)               NULL,
+  PswdHash  CHAR(32)                  NULL,
+  PswdSalt  CHAR(16)                  NULL,
+  FirstName VARCHAR(50)               NULL,
+  LastName  VARCHAR(50)               NULL,
+  CONSTRAINT users_Login_uindex
+  UNIQUE (Login)
+)
+  ENGINE = InnoDB;
+
+ALTER TABLE permissions
+  ADD CONSTRAINT permissions_users_UserId_fk
+FOREIGN KEY (UserId) REFERENCES users (UserId)
+  ON UPDATE CASCADE
+  ON DELETE CASCADE;

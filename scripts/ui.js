@@ -68,17 +68,6 @@ function UICheckbox(id, label) {
     };
 }
 
-function UIFile(id, label) {
-    UIControl.call(this, id, label);
-
-    let templFile = '<div class="file-container"><button id="#id#">#label#</button><input id="ghost-#id#" name="#id#" type="file"/></div>';
-    this.element = $(templFile.replace(/#id#/g, id).replace(/#label#/g, label))[0];
-
-    $(this.element).find('#' + id).click(() => {
-        $(this.element).find('#ghost-' + id).trigger('click');
-    });
-}
-
 function UIGroup(id) {
     this.id = id || 'group';
     const controls = [];
@@ -100,23 +89,17 @@ function UIGroup(id) {
         return control;
     };
 
-    this.getControlById = function (id) {
-        return controls.find(function (control) {
-            return control.id === id;
-        });
-    };
-
     this.appendTo = function (selector) {
         for (let i = 0; i < controls.length; i++) {
             if (controls[i].hasOwnProperty('appendTo'))
                 controls[i].appendTo(selector);
         }
-    }
+    };
 
     this.prependTo = function (selector) {
         for (let i = controls.length - 1; i >= 0; i--) {
             if (controls[i].hasOwnProperty('prependTo'))
                 controls[i].prependTo(selector);
         }
-    }
+    };
 }

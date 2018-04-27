@@ -3,6 +3,9 @@ include_once 'includes/user.php';
 
 global $active_user;
 $active_user = get_active_user();
+
+global $store_url;
+$store_url = true;
 ?>
     <!DOCTYPE html>
     <html>

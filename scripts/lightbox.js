@@ -1,6 +1,4 @@
 $(function () {
-    const width = 600;
-
     $.get('/lightbox.html', function (result) {
         $('body').append(result);
 
@@ -9,11 +7,15 @@ $(function () {
         });
     });
 
-    $('.image-thumb').click(function (event) {
-        let image = $(event.currentTarget).find('img');
-        let srcLarge = image.attr('data-src-large');
+    $('.image-thumb img').click(function (event) {
+        let image = $(event.currentTarget);
+
+        let source = image.attr('data-src-large');
+        let filename = source.substr(source.lastIndexOf('/') + 1);
 
         $('.lightbox-blackout').addClass('show');
-        $('.lightbox-blackout img').attr('src', image.attr('data-src-large'));
+        $('.lightbox-blackout img').attr('src', source);
+
+        $('.lightbox-blackout .download').attr('download', filename).attr('href', source);
     });
 });

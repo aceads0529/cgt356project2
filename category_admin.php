@@ -3,10 +3,10 @@
 <?php
 include_once 'includes/db.php';
 
-if ($active_user['AcctType'] == 'ADMIN')
-    $categories = db_connect_query('SELECT * FROM categories');
-else
-    $categories = db_connect_query('SELECT C.* FROM categories C, permissions P WHERE C.CategoryId=P.CategoryId AND P.UserId=?', $active_user['UserId']);
+if (!$active_user || $active_user['AcctType'] != 'ADMIN')
+    redirect_login();
+
+$categories = db_connect_query('SELECT * FROM categories');
 ?>
 
 <div id="page-content-container">

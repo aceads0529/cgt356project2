@@ -1,8 +1,15 @@
 <?php
 include_once 'includes/utils.php';
 include_once 'includes/db.php';
+include_once 'includes/user.php';
 
-$category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?', $_GET['category-id'])->fetch_assoc();
+if (!user_is_authorized(null, AUTH_CATEGORY_EDIT))
+    redirect_login();
+
+$category = read_get_id('category-id');
+
+if (!$category)
+    redirect_back();
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +40,8 @@ $category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?',
 
 <script>
     const form = new UIGroup('form');
-    const label = new UITextbox('label', 'Label').value('<?php echo addslashes($category_edit['Label']); ?>');
-    const description = new UITextbox('description', 'Description').value('<?php echo addslashes($category_edit['Description']); ?>');
+    const label = new UITextbox('label', 'Label').value('<?php echo addslashes($category['Label']); ?>');
+    const description = new UITextbox('description', 'Description').value('<?php echo addslashes($category['Description']); ?>');
 
     form.add(label);
     form.add(description);
@@ -44,8 +51,8 @@ $category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?',
     function onSubmit(event) {
         event.preventDefault();
 
-        var values = form.value();
-        values['category-id'] = <?php echo $category_edit['CategoryId']; ?>
+        let values = form.value();
+        values['category-id'] = <?php echo $category['CategoryId']; ?>
 
             $.post('api/category_edit.php', values, function (result) {
                 if (result.success) {

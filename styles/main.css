@@ -211,11 +211,44 @@ tbody tr:nth-child(2n) {
     opacity: 1;
 }
 
-.lightbox-blackout img {
+.lightbox-blackout .lighbox-content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.lightbox-blackout .lighbox-content .download {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.image-nav {
+    display: flex;
+    margin: 80px 0;
+    align-items: center;
+    background: #eee;
+    padding: 10px;
+}
+
+.image-nav div {
+    flex: 1 1 100px;
+    text-align: center;
+}
+
+.image-nav .range a {
+    display: inline-block;
+    padding: 5px;
+}
+
+.image-nav .range a.active {
+    color: #b13;
+    font-weight: bold;
 }
 
 @media(max-width: 640px) {

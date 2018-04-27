@@ -1,20 +1,21 @@
 <?php
 include_once '../includes/utils.php';
 include_once '../includes/user.php';
+include_once '../includes/db.php';
 
 if (!user_is_authorized(null, AUTH_USER_CREATE))
-    api_response(false, ERR_NOT_AUTHORIZED);
+    api_exit_response(false, ERR_NOT_AUTHORIZED);
 
 list($params, $num_empty) = safe_post_read('username', 'password', 'acct-type', 'first-name', 'last-name', 'categories?');
 
 if ($num_empty > 0)
-    api_response(false, ERR_REQUIRED_FIELDS);
+    api_exit_response(false, ERR_REQUIRED_FIELDS);
 
 $db = db_connect();
 
-if (user_exists($db, $params['username'])) {
+if (row_exists('users', 'Login', $params['username'])) {
     db_close($db);
-    api_response(false, sprintf('Username "%s" is already taken', $params['username']));
+    api_exit_response(false, sprintf('Username "%s" is already taken', $params['username']));
 }
 
 $salt = generate_salt();
@@ -32,4 +33,4 @@ $userId = mysqli_insert_id($db);
 set_user_categories($userId, $params['categories']);
 
 db_close($db);
-api_response(true);
+api_exit_response(true);

@@ -10,7 +10,7 @@ if (user_is_authorized($params['category-id'], AUTH_IMAGE_CREATE) && $num_empty 
     list($filename, $ratio) = upload_image($_FILES['upload'], $params['category-id']);
 
     if (!$filename)
-        api_response(false, 'Image upload failed. Image must be a .jpg or .png');
+        api_exit_response(false, 'Image upload failed');
 
     db_connect_query('INSERT INTO images (CategoryId, Label, Description, Filename, AspectRatio) VALUES (?, ?, ?, ?, ?)',
         $params['category-id'],
@@ -20,4 +20,4 @@ if (user_is_authorized($params['category-id'], AUTH_IMAGE_CREATE) && $num_empty 
         $ratio);
 }
 
-header('Location: /gallery_category.php?category-id=' . $params['category-id']);
+redirect_back();

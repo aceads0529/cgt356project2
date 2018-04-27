@@ -1,12 +1,14 @@
 <?php
 include_once 'includes/utils.php';
+include_once 'includes/user.php';
 
-$image = get_from_id('image-id');
+$image = read_get_id('image-id');
 
-if (!$image) {
-    header('Location: /index.php');
-    exit;
-}
+if (!$image)
+    redirect_back();
+
+if (!user_is_authorized($image['CategoryId'], AUTH_IMAGE_DELETE))
+    redirect_login();
 ?>
 
 <?php include_once 'header.php'; ?>
@@ -29,13 +31,13 @@ if (!$image) {
         }
 
         function clickYes() {
-            $.post('api/image_delete.php', {'image-id': <?php echo $_GET['image-id']; ?>}, function (result) {
-                window.location = '/gallery_category.php?category-id=<?php echo $image['CategoryId']; ?>';
+            $.post('api/image_delete.php', {'image-id': <?php echo $_GET['image-id']; ?>}, function () {
+                window.location = '<?php echo get_back_url(); ?>';
             });
         }
 
         function clickNo() {
-            window.location = '/gallery_category.php?category-id=<?php echo $image['CategoryId']; ?>';
+            window.location = '<?php echo get_back_url(); ?>';
         }
     </script>
 

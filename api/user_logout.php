@@ -2,6 +2,6 @@
 include_once '../includes/utils.php';
 
 safe_session_start();
-unset($_SESSION['user-id']);
+session_unset();
 
-header('Location: /index.php');
+redirect_back();

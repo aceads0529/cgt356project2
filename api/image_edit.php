@@ -11,10 +11,12 @@ if (user_is_authorized($params['category-id'], AUTH_IMAGE_EDIT) && $num_empty ==
 
     if ($image = db_query($db, 'SELECT * FROM images WHERE ImageId=?', $params['image-id'])) {
         $image = $image->fetch_assoc();
+
+        // If a new image is uploaded, replace image files and update row
         if (isset($_FILES['upload']) && $_FILES['upload']['error'] == UPLOAD_ERR_OK) {
             list($filename, $ratio) = upload_image($_FILES['upload'], $params['category-id']);
             if ($filename) {
-                delete_image($image);
+                delete_image_files($image);
                 db_query($db, 'UPDATE images SET Filename=?, AspectRatio=? WHERE ImageId=?', $filename, $ratio, $params['image-id']);
             }
         }
@@ -23,4 +25,4 @@ if (user_is_authorized($params['category-id'], AUTH_IMAGE_EDIT) && $num_empty ==
     }
 }
 
-header('Location: /gallery_category.php?category-id=' . $params['category-id']);
+redirect_back();

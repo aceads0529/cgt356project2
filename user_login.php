@@ -1,4 +1,7 @@
-<?php include_once 'header.php'; ?>
+<?php include_once 'includes/utils.php'; ?>
+<?php include_once 'header.php';
+global $store_url;
+$store_url = false; ?>
 
     <div class="form-container">
         <form id="form-login" onsubmit="onSubmit(event)">
@@ -25,11 +28,11 @@
         function onSubmit(event) {
             event.preventDefault();
 
-            var values = form.value();
+            let values = form.value();
 
             $.post('api/user_login.php', values, function (result) {
                 if (result.success) {
-                    window.location = 'index.php';
+                    window.location = '<?php echo get_back_url(); ?>';
                 }
                 else {
                     $('.message').text(result.error);

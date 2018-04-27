@@ -3,10 +3,15 @@
 <?php
 include_once 'includes/db.php';
 
+if (!$active_user || $active_user['AcctType'] != 'ADMIN')
+    redirect_login();
+
 $db = db_connect();
 
 $admins = db_query($db, 'SELECT * FROM users WHERE AcctType="ADMIN"');
 $curators = db_query($db, 'SELECT * FROM users WHERE AcctType="CURATOR"');
+
+db_close($db);
 ?>
 
 <div id="page-content-container">

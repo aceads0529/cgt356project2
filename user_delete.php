@@ -1,20 +1,14 @@
 <?php
-if (!isset($_GET['user-id'])) {
-    header('Location: index.php');
-    exit;
-}
-
+include_once 'includes/utils.php';
 include_once 'includes/user.php';
 
-$user = get_user_by_id($_GET['user-id']);
+$user = read_get_id('user-id');
 
-if (!$user) {
-    header('Location: index.php');
-    exit;
-}
+if (!$user)
+    redirect_back();
 
-$user = $user->fetch_assoc();
-
+if (!user_is_authorized($user['UserId'], AUTH_USER_DELETE))
+    redirect_login();
 ?>
 
 <?php include_once 'header.php'; ?>
@@ -37,7 +31,7 @@ $user = $user->fetch_assoc();
         }
 
         function clickYes() {
-            $.post('api/user_delete.php', {'user-id': <?php echo $_GET['user-id']; ?>}, function (result) {
+            $.post('api/user_delete.php', {'user-id': <?php echo $_GET['user-id']; ?>}, function () {
                 window.location = '/user_admin.php';
             });
         }

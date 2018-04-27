@@ -8,6 +8,7 @@ define('IMG_LARGE_DIRECTORY', '/image_uploads/large/');
  * Returns the image filename and aspect ratio, or false if unsuccessful
  *
  * @param array $file
+ * @param int $category_id
  * @param string|bool $filename
  * @return array
  */
@@ -37,7 +38,7 @@ function upload_image($file, $category_id, $filename = false)
 
         return [$filename, imagesx($image) / imagesy($image)];
     } catch (mysqli_sql_exception $e) {
-        return false;
+        return [false, false];
     }
 }
 
@@ -131,7 +132,7 @@ function resize($image, $max_width, $max_height)
 /**
  * Returns path to image (thumbnail)
  *
- * @param array $image
+ * @param $image
  * @return string
  */
 function get_img_thumb_path($image)
@@ -156,7 +157,7 @@ function get_img_large_path($image)
  *
  * @param array $image
  */
-function delete_image($image)
+function delete_image_files($image)
 {
     unlink('..' . get_img_large_path($image));
     unlink('..' . get_img_thumb_path($image));

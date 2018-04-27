@@ -3,54 +3,16 @@ include_once 'db.php';
 include_once 'utils.php';
 
 /**
- * Generates an empty user array
- *
- * @return array
- */
-function user_empty()
-{
-    return [
-        'UserId' => -1,
-        'AcctType' => '',
-        'Login' => '',
-        'PswdHash' => '',
-        'PswdSalt' => '',
-        'FirstName' => '',
-        'LastName' => ''
-    ];
-}
-
-/**
- * Returns whether a username already exists in the database
- *
- * @param mysqli $db
- * @param string $username
- * @return bool
- */
-function user_exists($db, $username)
-{
-    return db_query($db, 'SELECT * FROM users WHERE Login=?', $username)->num_rows > 0;
-}
-
-/**
- * Returns the active user ID, or false if no user is logged in
- *
- * @return int|bool
- */
-function get_active_user_id()
-{
-    safe_session_start();
-    return isset($_SESSION['user-id']) ? $_SESSION['user-id'] : false;
-}
-
-/**
  * Returns the active user, or false if no user is logged in
  *
  * @return array|bool
  */
 function get_active_user()
 {
-    if ($userId = get_active_user_id()) {
+    safe_session_start();
+    $userId = isset($_SESSION['user-id']) ? $_SESSION['user-id'] : false;
+
+    if ($userId) {
         return get_user_by_id($userId)->fetch_assoc();
     } else {
         return false;
@@ -98,9 +60,10 @@ function get_user_categories($userId)
  */
 function set_user_categories($userId, $categories)
 {
+    $active_user = get_active_user();
     $user = get_user_by_id($userId)->fetch_assoc();
 
-    if ($user['AcctType'] != 'CURATOR')
+    if ($user['AcctType'] != 'CURATOR' || !$active_user || $active_user['AcctType'] != 'ADMIN')
         return;
 
     if (empty($categories))
@@ -157,6 +120,7 @@ define('AUTH_CATEGORY_EDIT', 4);
 define('AUTH_CATEGORY_DELETE', 5);
 define('AUTH_IMAGE_CREATE', 6);
 define('AUTH_IMAGE_EDIT', 7);
+define('AUTH_IMAGE_DELETE', 7);
 
 /**
  * Returns whether a user is authorized to perform an action
@@ -186,6 +150,9 @@ function user_is_authorized($context, $auth_mode)
 
         case AUTH_IMAGE_CREATE:
         case AUTH_IMAGE_EDIT:
+        case AUTH_IMAGE_DELETE:
             return $user['AcctType'] == 'ADMIN' || user_has_category($user['UserId'], $context);
+        default:
+            return false;
     }
 }

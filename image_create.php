@@ -1,10 +1,15 @@
 <?php
-if (!isset($_GET['category-id'])) {
-    header('Location: /index.php');
-    exit;
-}
+include_once 'includes/user.php';
+
+if (!isset($_GET['category-id']))
+    redirect_back();
+
+if (!user_is_authorized($_GET['category-id'], AUTH_IMAGE_CREATE))
+    redirect_login();
 ?>
-<?php include_once 'header.php'; ?>
+<?php include_once 'header.php';
+global $store_url;
+$store_url = false; ?>
 
     <div class="form-container">
         <form onsubmit="onSubmit(event)" method="post" action="/api/image_create.php" enctype="multipart/form-data">

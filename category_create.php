@@ -1,3 +1,11 @@
+<?php
+include_once 'includes/utils.php';
+include_once 'includes/user.php';
+
+if (!user_is_authorized(null, AUTH_CATEGORY_CREATE))
+    redirect_login();
+?>
+
 <?php include_once 'header.php'; ?>
 
     <div class="form-container">
@@ -23,7 +31,7 @@
         function onSubmit(event) {
             event.preventDefault();
 
-            var values = form.value();
+            let values = form.value();
 
             $.post('api/category_create.php', values, function (result) {
                 if (result.success) {
