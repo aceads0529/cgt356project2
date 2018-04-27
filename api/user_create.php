@@ -1,6 +1,6 @@
 <?php
-include '../includes/utils.php';
-include '../includes/user.php';
+include_once '../includes/utils.php';
+include_once '../includes/user.php';
 
 if (!user_is_authorized(null, AUTH_USER_CREATE))
     api_response(false, ERR_NOT_AUTHORIZED);

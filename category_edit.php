@@ -1,8 +1,7 @@
 <?php
-include 'includes/utils.php';
-include 'includes/db.php';
+include_once 'includes/utils.php';
+include_once 'includes/db.php';
 
-$_GET['category-id'] = 1;
 $category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?', $_GET['category-id'])->fetch_assoc();
 ?>
 
@@ -34,8 +33,8 @@ $category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?',
 
 <script>
     const form = new UIGroup('form');
-    const label = new UITextbox('label', 'Label').value('<?php echo $category_edit['Label']; ?>');
-    const description = new UITextbox('description', 'Description').value('<?php echo $category_edit['Description']; ?>');
+    const label = new UITextbox('label', 'Label').value('<?php echo addslashes($category_edit['Label']); ?>');
+    const description = new UITextbox('description', 'Description').value('<?php echo addslashes($category_edit['Description']); ?>');
 
     form.add(label);
     form.add(description);
@@ -50,7 +49,7 @@ $category_edit = db_connect_query('SELECT * FROM categories WHERE CategoryId=?',
 
             $.post('api/category_edit.php', values, function (result) {
                 if (result.success) {
-                    window.location = 'index.php';
+                    window.location = '/category_admin.php';
                 }
                 else {
                     $('.message').text(result.error);

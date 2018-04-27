@@ -1,17 +1,20 @@
 <?php
 
+define('IMG_THUMB_DIRECTORY', '/image_uploads/thumb/');
+define('IMG_LARGE_DIRECTORY', '/image_uploads/large/');
+
 /**
  * Uploads an image file, resizing for large and thumbnail
- * Returns the image filename, or false if unsuccessful
+ * Returns the image filename and aspect ratio, or false if unsuccessful
  *
  * @param array $file
- * @param string $filename
- * @return bool|string
+ * @param string|bool $filename
+ * @return array
  */
 function upload_image($file, $category_id, $filename = false)
 {
     if (!is_image($file))
-        return false;
+        return [false, false];
 
     try {
         $image = image_from_file($file);
@@ -21,14 +24,18 @@ function upload_image($file, $category_id, $filename = false)
 
         if (!$filename) {
             $category = db_connect_query('SELECT Label FROM categories WHERE CategoryId=?', $category_id)->fetch_assoc();
+
+            if (!$category)
+                return [false, false];
+
             $filename = generate_filename($file, $category['Label']) . '.jpg';
         }
 
         // All files are stored as jpeg images
-        imagejpeg($large, '../image_uploads/large/' . $filename, 90);
-        imagejpeg($thumb, '../image_uploads/thumb/' . $filename, 90);
+        imagejpeg($large, '..' . IMG_LARGE_DIRECTORY . $filename, 90);
+        imagejpeg($thumb, '..' . IMG_THUMB_DIRECTORY . $filename, 90);
 
-        return $filename;
+        return [$filename, imagesx($image) / imagesy($image)];
     } catch (mysqli_sql_exception $e) {
         return false;
     }
@@ -43,7 +50,7 @@ function upload_image($file, $category_id, $filename = false)
 function is_image($file)
 {
     $type = $file['type'];
-    return $type == 'image/jpeg' || $type == 'image/png';
+    return $type == 'image/jpeg' || $type == 'image/png' || $type == 'image/gif';
 }
 
 /**
@@ -78,6 +85,8 @@ function image_from_file($file)
         case 'image/png':
             $result = imagecreatefrompng($file['tmp_name']);
             break;
+        case 'image/gif':
+            $result = imagecreatefromgif($file['tmp_name']);
     }
 
     return $result;
@@ -117,4 +126,38 @@ function resize($image, $max_width, $max_height)
     imagecopyresampled($result, $image, 0, 0, 0, 0, $dst_width, $dst_height, $src_width, $src_height);
 
     return $result;
+}
+
+/**
+ * Returns path to image (thumbnail)
+ *
+ * @param array $image
+ * @return string
+ */
+function get_img_thumb_path($image)
+{
+    return IMG_THUMB_DIRECTORY . $image['Filename'];
+}
+
+/**
+ * Returns path to image (large)
+ *
+ * @param array $image
+ * @return string
+ */
+function get_img_large_path($image)
+{
+    return IMG_LARGE_DIRECTORY . $image['Filename'];
+
+}
+
+/**
+ * Deletes image files from uploads
+ *
+ * @param array $image
+ */
+function delete_image($image)
+{
+    unlink('..' . get_img_large_path($image));
+    unlink('..' . get_img_thumb_path($image));
 }

@@ -31,7 +31,7 @@ $active_user = get_active_user();
         <nav>
             <ul>
                 <li><a href="/index.php">Home</a></li>
-                <li><a href="#">Gallery</a></li>
+                <li><a href="/gallery_all.php">Gallery</a></li>
                 <li><a href="#">Readme</a></li>
                 <?php if (!$active_user): ?>
                     <li id="login"><a href="/user_login.php">Login</a></li>
@@ -50,9 +50,16 @@ $active_user = get_active_user();
             <?php if ($active_user['AcctType'] == 'ADMIN'): ?>
                 <li>Admin Toolbar</li>
                 <li><a href="/user_admin.php">Accounts</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Images</a></li>
-            <?php endif; ?>
+                <li><a href="/category_admin.php">Categories</a></li>
+            <?php else: ?>
+                <li>Categories</li>
+                <?php
+                $categories = get_user_categories($active_user['UserId']);
+                foreach ($categories as $c): ?>
+                    <li>
+                        <a href="gallery_category.php?category-id=<?php echo $c['CategoryId']; ?>"><?php echo $c['Label']; ?></a>
+                    </li>
+                <?php endforeach; endif; ?>
             <li><a href="/user_edit.php?user-id=<?php echo $active_user['UserId']; ?>">Edit Account</a></li>
         </ul>
     </div>

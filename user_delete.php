@@ -17,10 +17,10 @@ $user = $user->fetch_assoc();
 
 ?>
 
-<?php include 'header.php'; ?>
+<?php include_once 'header.php'; ?>
 
     <div class="form-container">
-        <form id="form-create" onsubmit="onSubmit(event)">
+        <form onsubmit="onSubmit(event)">
             <div class="title">Delete Account</div>
             <p>Are you sure you want to delete '<?php echo $user['Login']; ?>' permanently?</p>
 
@@ -47,4 +47,4 @@ $user = $user->fetch_assoc();
         }
     </script>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>

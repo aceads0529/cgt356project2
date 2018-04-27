@@ -1,6 +1,6 @@
 <?php
-include '../includes/utils.php';
-include '../includes/user.php';
+include_once '../includes/utils.php';
+include_once '../includes/user.php';
 
 list($params, $num_empty) = safe_post_read('selection?');
 

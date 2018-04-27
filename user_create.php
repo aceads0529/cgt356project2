@@ -5,7 +5,7 @@ if (!isset($_GET['acct-type']))
     $_GET['acct-type'] = 'CURATOR';
 ?>
 
-<?php include 'header.php'; ?>
+<?php include_once 'header.php'; ?>
 
     <div class="form-container">
         <form id="form-create" onsubmit="onSubmit(event)">
@@ -67,4 +67,4 @@ if (!isset($_GET['acct-type']))
         }
     </script>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>

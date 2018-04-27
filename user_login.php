@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include_once 'header.php'; ?>
 
     <div class="form-container">
         <form id="form-login" onsubmit="onSubmit(event)">
@@ -38,4 +38,4 @@
         }
     </script>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>

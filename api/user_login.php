@@ -1,6 +1,6 @@
 <?php
-include '../includes/utils.php';
-include '../includes/db.php';
+include_once '../includes/utils.php';
+include_once '../includes/db.php';
 
 safe_session_start();
 

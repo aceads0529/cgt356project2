@@ -1,4 +1,5 @@
 <?php
+include_once 'db.php';
 
 // Error messages
 define('ERR_REQUIRED_FIELDS', 'Please fill out all required fields');
@@ -40,7 +41,7 @@ function safe_post_read(...$vars)
         // Increment number of empties (if necessary)
         if (isset($_POST[$v])) {
             $result[$v] = $_POST[$v];
-            $num_empty += empty($_POST[$v]) && !$allow_empty ? 1 : 0;
+            $num_empty += (empty($_POST[$v]) && !is_numeric($_POST[$v])) && !$allow_empty ? 1 : 0;
         } else {
             $result[$v] = '';
             $num_empty += $allow_empty ? 0 : 1;
@@ -172,4 +173,39 @@ function parse_selection_range($select, $column)
     }
 
     return $query;
+}
+
+/**
+ * Returns user, category, or image from $_GET parameter, or false if unsuccessful
+ *
+ * @param string $param
+ * @return bool
+ */
+function get_from_id($param)
+{
+    if (!isset($_GET[$param]))
+        return false;
+
+    $id = $_GET[$param];
+
+    switch ($param) {
+        case 'user-id':
+            $query = 'SELECT * FROM users WHERE UserId=?';
+            break;
+        case 'category-id':
+            $query = 'SELECT * FROM categories WHERE CategoryId=?';
+            break;
+        case 'image-id':
+            $query = 'SELECT * FROM images WHERE ImageId=?';
+            break;
+        default:
+            return false;
+    }
+
+    $result = db_connect_query($query, $id);
+
+    if (!$result || $result->num_rows == 0)
+        return false;
+    else
+        return $result->fetch_assoc();
 }

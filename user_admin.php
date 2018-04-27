@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include_once 'header.php'; ?>
 
 <?php
 include_once 'includes/db.php';
@@ -19,6 +19,7 @@ $curators = db_query($db, 'SELECT * FROM users WHERE AcctType="CURATOR"');
                 <th>Username</th>
                 <th>First name</th>
                 <th>Last name</th>
+                <th><!-- Permissions --></th>
                 <th><!-- Actions --></th>
             </tr>
             </thead>
@@ -28,6 +29,7 @@ $curators = db_query($db, 'SELECT * FROM users WHERE AcctType="CURATOR"');
                     <td><?php echo $row['Login']; ?></td>
                     <td><?php echo $row['FirstName']; ?></td>
                     <td><?php echo $row['LastName']; ?></td>
+                    <td></td>
                     <td></td>
                 </tr>
             <?php endwhile; ?>
@@ -79,4 +81,4 @@ $curators = db_query($db, 'SELECT * FROM users WHERE AcctType="CURATOR"');
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>

@@ -80,11 +80,11 @@ function get_user_by_id($userId)
 function get_user_categories($userId)
 {
     $db = db_connect();
-    $query = db_query($db, 'SELECT CategoryId FROM permissions WHERE UserId=?', $userId);
+    $query = db_query($db, 'SELECT C.* FROM categories C, permissions P WHERE C.CategoryId=P.CategoryId AND P.UserId=?', $userId);
     $result = [];
 
     while ($row = $query->fetch_assoc()) {
-        $result[] = db_query($db, 'SELECT * FROM categories WHERE CategoryId=?', $row['CategoryId'])->fetch_assoc();
+        $result[] = $row;
     }
 
     return $result;
@@ -181,12 +181,11 @@ function user_is_authorized($context, $auth_mode)
 
         case AUTH_CATEGORY_CREATE:
         case AUTH_CATEGORY_DELETE:
-            return $user['AcctType'] == 'ADMIN';
         case AUTH_CATEGORY_EDIT:
-            return $user['AcctType'] == 'ADMIN' || user_has_category($user['UserId'], $context);
+            return $user['AcctType'] == 'ADMIN';
 
         case AUTH_IMAGE_CREATE:
         case AUTH_IMAGE_EDIT:
-            return $user['AcctType'] == 'ADMIN';
+            return $user['AcctType'] == 'ADMIN' || user_has_category($user['UserId'], $context);
     }
 }

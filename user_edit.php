@@ -7,7 +7,7 @@ if (isset($_GET['user-id']))
 else
     $user_edit = user_empty();
 
-include 'header.php'; ?>
+include_once 'header.php'; ?>
 
     <div class="form-container">
         <form id="form-create" onsubmit="onSubmit(event)">
@@ -21,11 +21,11 @@ include 'header.php'; ?>
 
     <script>
         const form = new UIGroup('form');
-        const username = new UITextbox('username', 'Username').value('<?php echo $user_edit['Login']; ?>');
+        const username = new UITextbox('username', 'Username').value('<?php echo addslashes($user_edit['Login']); ?>');
         const password = new UITextbox('password', 'Change password', 'password');
         const passwordConfirm = new UITextbox('password-confirm', 'Password (confirm)', 'password');
-        const firstName = new UITextbox('first-name', 'First name').value('<?php echo $user_edit['FirstName']; ?>');
-        const lastName = new UITextbox('last-name', 'Last name').value('<?php echo $user_edit['LastName']; ?>');
+        const firstName = new UITextbox('first-name', 'First name').value('<?php echo addslashes($user_edit['FirstName']); ?>');
+        const lastName = new UITextbox('last-name', 'Last name').value('<?php echo addslashes($user_edit['LastName']); ?>');
 
         form.add(username);
         form.add(password);
@@ -39,7 +39,7 @@ include 'header.php'; ?>
         <?php $categories = get_all_categories();
         foreach ($categories as $cat): ?>
 
-        categories.add(new UICheckbox('<?php echo $cat['CategoryId']; ?>', '<?php echo $cat['Label']; ?>').value(<?php echo user_has_category($_GET['user-id'], $cat['CategoryId']) ? 'true' : 'false'; ?>));
+        categories.add(new UICheckbox('<?php echo $cat['CategoryId']; ?>', '<?php echo addslashes($cat['Label']); ?>').value(<?php echo user_has_category($_GET['user-id'], $cat['CategoryId']) ? 'true' : 'false'; ?>));
 
         <?php endforeach; ?>
         form.add(categories);
@@ -70,4 +70,4 @@ include 'header.php'; ?>
         }
     </script>
 
-<?php include 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>

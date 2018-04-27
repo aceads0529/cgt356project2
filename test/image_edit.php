@@ -1,12 +1,12 @@
 <?php
 
-include '../includes/db.php';
-include '../includes/utils.php';
+include_once '../includes/db.php';
+include_once '../includes/utils.php';
 
 $_GET['ImageId'] = 4;
 
-include '../includes/utils.php';
-include '../includes/user.php';
+include_once '../includes/utils.php';
+include_once '../includes/user.php';
 
 $active_user = get_active_user();
 
